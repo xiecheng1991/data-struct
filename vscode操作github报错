@@ -1,0 +1,1 @@
+git OpenSSL SSL_connect: 解决办法 在仓库根目录 命令行 env GIT_SSL_NO_VERIFY=true
