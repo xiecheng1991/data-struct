@@ -19,6 +19,13 @@ void PrintEle( const vector<int>& array ) {
 }
 
 //冒泡排序
+/*
+    算法分析:
+    时间复杂度分析: 最好情况已经有序复杂度为o1
+                   最坏情况全部逆序时间复杂度为0n
+    空间复杂度分析: 未使用额外的空间,所以空间复杂度为01，也叫原地排序
+    稳定性分析:     相同元素前后顺序未发生改变,所以是稳定的
+*/
 void bubble_sort( vector<int>& array ) {
     int len = array.size();
     //如果数组的元素小于等于一个,就无需排序
@@ -43,10 +50,39 @@ void bubble_sort( vector<int>& array ) {
 
 }
 
+//插入排序
+/*
+    算法分析: 时间复杂度: o(n平方)
+            空间复杂: 0(1)未使用额外的空间,原地排序
+            稳定排序: 相同元素位置未发生改变所以是稳定排序
+*/
+void insert_sort( vector<int>& array ) {
+    int len = array.size();
+    //如果数组元素小于等于一个就无需排序
+    if ( len <= 1 ) return;
+    //默认第一个元素已经有序了,从第二个元素开始往前找到合适的位置插入
+    for ( int i = 1; i < len; ++i ) {
+        int value = array[i];
+        int j = i - 1;
+        // 这里粗心犯了个错--j 写成了++j 粗心
+        for ( ; j >= 0; --j ) {
+            //如果当前元素比value(要插入元素大,则将该元素往后移动一位)
+            if ( array[j] > value ) {
+                array[j+1] = array[j];
+            } else {
+                //找到了合适的位置
+                break;
+            }
+        }
+        //放入合适的位置,因为是往后移动一位当第j个元素比他小那么合适的位置为j+1
+        array[j+1] = value;
+    }
+}
 
 int main( int argc, char* argv ) {
     vector<int> test{6,2,3,5,4,1};
-    bubble_sort( test );
+ //   bubble_sort( test );
+    insert_sort( test );
     PrintEle( test );
     getchar();
     return 0;
