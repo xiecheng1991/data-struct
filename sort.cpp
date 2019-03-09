@@ -79,10 +79,36 @@ void insert_sort( vector<int>& array ) {
     }
 }
 
+//选择排序
+/*
+    算法分析: 
+            时间复杂度: 每一轮都会把未排序区间内的所有元素都遍历一遍所以为o(n平方)
+            空间复杂度: 未使用额外的空间,所以为01， 原地排序
+            稳定性: 因为是进行元素的交换,所以破坏了稳定性,是不稳定排序
+*/
+void select_sort( vector<int>& array ) {
+    int len = array.size();
+    if ( len <= 1 ) {
+        return;
+    }
+    //类似插入排序 也分为已排序和未排序 每次从未排序的区间中找到一个最小的元素进行插入
+    //并和当前第i个元素进行交换
+    for ( int i = 0; i < len; ++i ) {
+        int min = i;
+        for ( int j = i; j < len; ++j ) {
+            min = array[min] <= array[j] ? min : j;
+        }
+        if ( i != min ) {
+            swap( array, min, i );
+        }
+    } 
+}
+
 int main( int argc, char* argv ) {
     vector<int> test{6,2,3,5,4,1};
  //   bubble_sort( test );
-    insert_sort( test );
+ //   insert_sort( test );
+    select_sort( test );
     PrintEle( test );
     getchar();
     return 0;
