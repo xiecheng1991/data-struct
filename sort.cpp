@@ -104,11 +104,55 @@ void select_sort( vector<int>& array ) {
     } 
 }
 
+//合并两个已排序区间
+void merge( vector<int>& array, int ll, int lr, int rl, int rr ) {
+    vector<int> tmp;
+    int templl = ll;
+    int index = 0;
+    while ( ll <= lr && rl <= rr ) {
+        if ( array[ll] <= array[rl] ) {
+            tmp.push_back( array[ll] );
+            ll++;
+        } else {
+            tmp.push_back( array[rl] );
+            rl++;
+        }
+    }
+    int start = ll, end = lr;
+    if ( rl <= rr ) {
+        start = rl;
+        end = rr;
+    }
+    while ( start <= end ) {
+        tmp.push_back( array[start++] );
+    }
+    //把临时数组内的内容拷贝到要合并的区间
+    for ( int i = 0; i < tmp.size(); ++i ) {
+        array[templl+i] = tmp[i];
+    }
+}
+
+//归并排序
+/*
+    算法分析:
+        时间复杂度: o(nlogn)分析过程太复杂
+        空间复杂度: 要额外申请内容空间，保存排序好的元素 o(n) 非原地
+        稳定性:    排序后相同元素前后顺序未发生变化所以是稳定的(关键看merge函数的实现)
+*/
+void merge_sort( vector<int>& array, int l, int r ) {
+    if ( l >= r ) return;
+    int mid = l + ( r - l ) / 2;
+    merge_sort( array, l, mid );
+    merge_sort( array, mid + 1, r );
+    merge( array, l, mid, mid+1, r );
+}
+
 int main( int argc, char* argv ) {
     vector<int> test{6,2,3,5,4,1};
  //   bubble_sort( test );
  //   insert_sort( test );
-    select_sort( test );
+ //   select_sort( test );
+    merge_sort( test, 0, test.size()-1 );
     PrintEle( test );
     getchar();
     return 0;
