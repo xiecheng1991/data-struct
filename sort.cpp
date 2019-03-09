@@ -147,12 +147,52 @@ void merge_sort( vector<int>& array, int l, int r ) {
     merge( array, l, mid, mid+1, r );
 }
 
+int partition( vector<int>& array, int l, int r ) {
+    int i = l; //游标
+    int temp = array[r]; //这个位置当时犯了个错,没有把要比较的值保存起来,导致要比较的值其实已经变了
+    for ( int j = l; j < r; ++j ) {
+        if ( array[j] < temp ) {
+            swap( array, i, j );
+            i++;
+        }
+    }
+    swap( array, i, r );
+    return i;
+}
+
+void quick_sort_c( vector<int>& array, int l, int r ) {
+    if ( l >= r ) return;
+    int pvoit = partition( array, l, r );
+    //******************************重点 分区的时候 左右两边不能包含分界点或者会死循环
+    //这里也犯了个错误 pvoit没有-1 导致死循环
+    quick_sort_c( array, l, pvoit - 1 );
+    quick_sort_c( array, pvoit+1, r );
+}
+
+//快速排序
+/*
+    //核心原理: 找到一个分界点,使得左边的元素都比他小右边的元素都比他大
+    //          然后对左边和右边都进行同样的处理 直到分区区间只有一个元素
+    //            为止就完成排序
+    快速排序分析:
+            时间复杂度分析: o( nlogn )
+            空间复杂度: o(1) 未使用额外的空间,原地排序
+            稳定性:     涉及到元素的交换,非稳定性排序
+*/
+void quick_sort( vector<int>& array ) {
+    //元素数量小于等于1就没必要排序
+    int len = array.size();
+    if ( len <= 1 ) return;
+    quick_sort_c( array, 0, len - 1 );
+} 
+
 int main( int argc, char* argv ) {
     vector<int> test{6,2,3,5,4,1};
  //   bubble_sort( test );
  //   insert_sort( test );
  //   select_sort( test );
-    merge_sort( test, 0, test.size()-1 );
+ //   merge_sort( test, 0, test.size()-1 );
+    quick_sort( test );
     PrintEle( test );
     getchar();
     return 0;
