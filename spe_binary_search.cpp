@@ -17,9 +17,25 @@ int findfirstequalele( vector<int>& array, int l, int r, int target ) {
     return -1;   
 }
 
+int findlastequalele( vector<int>& array, int l, int r, int target ) {
+    int last = r;
+    while ( l <= r ) {
+        int mid = l + ( ( r - l ) >> 1 );
+        if ( array[mid] == target && ( ( mid == last ) || ( array[mid+1] != target ) ) ) {
+            return mid;
+        } else if ( target > array[mid] ) {
+            l = mid + 1;
+        } else {
+            r = mid - 1;
+        }
+    }
+    return -1;
+}
+
 int main( int argc, char* argv[] ) {
     vector<int> test{1,2,3,3,4,6,7};
-    int res = findfirstequalele( test, 0, test.size() - 1, 11 );
+//    int res = findfirstequalele( test, 0, test.size() - 1, 7 );
+    int res = findlastequalele( test, 0, test.size() - 1, 11 );
     if ( res == -1 ) {
         cout << "not find it" << endl;
     } else {
