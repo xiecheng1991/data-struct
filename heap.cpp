@@ -18,7 +18,7 @@ class CHeap {
     //从顶部删除一个元素
     void Delete( int val );
  
-    //从下往上的堆化
+    //从下往上的堆化,主要还是用于添加元素的操作
     void HeapModify( int i );
 
     //交换两个元素
