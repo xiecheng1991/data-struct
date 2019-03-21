@@ -31,11 +31,40 @@ class CHeap {
     //交换两个元素
     void Swap( int i, int j );
 
+    //通过堆化过程进行排序操作
+    void Sort();
+
     private:
         int count;
         int capacity;
         vector<int> heap;
 };
+
+void CHeap::Sort() {
+    int index = count;
+    while ( index != 0 ) {
+        //把堆顶最大的元素放到最后,然后把剩余的count-1个元素再次进行堆化，然后再执行同样的操作
+        Swap( 0, --index );
+        //跟删除堆顶元素一样的过程
+        int i = 0;
+        while ( true ) {
+            int maxpos = i;
+            int temp = maxpos * 2;
+            if ( temp <= index-1 && heap[temp] > heap[i] ) {
+                Swap( i, temp );
+                i = temp;
+            }
+            if ( temp + 1 <= index-1 && heap[temp+1] > heap[i] ) {
+                Swap( i, temp + 1 );
+                i = temp + 1;
+            }
+            if ( maxpos == i ) {
+                //已经堆化完成,满足他的左右子树都比他小
+                break;
+            }
+        }
+    }
+}
 
 void CHeap::PrintHeap(){
     for ( int i = 0; i < count; ++i ) {
@@ -54,8 +83,8 @@ void CHeap::HeapModifyFromUpToDown( int i ) {
             maxpos = temppos;
         }
         if ( temppos + 1 <= count && heap[temppos+1] > heap[i] ) {
-            Swap( i, temppos );
-            i = temppos;
+            Swap( i, temppos + 1 );
+            i = temppos + 1;
         }
         //没有发生堆化，说明已经满足堆结构了
         if ( maxpos == i ) {
@@ -120,10 +149,13 @@ int main( int argc, char* argv[] ) {
     pHeap->PrintHeap();
 
     //删除堆定元素
-    pHeap->Delete();
+ //   pHeap->Delete();
+    pHeap->Sort();
 
     //打印堆
     pHeap->PrintHeap();
+
+    getchar();
 
     return 0;
 }
