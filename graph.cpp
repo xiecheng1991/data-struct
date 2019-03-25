@@ -20,7 +20,7 @@ class CGraph {
     public:
         CGraph( int num ) { 
             vertexnum = num;
-            vertexInfo = vector<vertex*>( vertexnum, NULL );
+            vertexInfo = vector<vertex*>( vertexnum + 1, NULL );
          }
          ~CGraph() {
          }
@@ -67,8 +67,8 @@ void CGraph::bfs( int s, int t ) {
                 vertex* ptemp = vertexInfo[s];
                 while ( ptemp != NULL ) {
                     q.push( ptemp->val );
-                    ptemp = ptemp->pnext;
                     pre[ptemp->val] = vid;
+                    ptemp = ptemp->pnext;
                 }
             }
         }
