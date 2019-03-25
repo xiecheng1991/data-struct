@@ -42,7 +42,7 @@ void printpath( map<int, int>& pre, int s, int t ) {
     if ( pre[t] != -1 && t != s ) {
         printpath( pre, s, pre[t] );
     }
-    cout << t << "->" << endl;
+    cout << t << "->";
 }
 
 void CGraph::bfs( int s, int t ) {
@@ -59,12 +59,13 @@ void CGraph::bfs( int s, int t ) {
             int vid = q.front();
             if ( vid == t ) {
                 //已经找到了,打印路径
+                printpath( pre, s, t );
                 return;
             }
             q.pop();
             if ( !visited[vid] ) {
                 visited[vid] = true;
-                vertex* ptemp = vertexInfo[s];
+                vertex* ptemp = vertexInfo[vid];
                 while ( ptemp != NULL ) {
                     q.push( ptemp->val );
                     pre[ptemp->val] = vid;
