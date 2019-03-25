@@ -9,7 +9,7 @@ using namespace std;
 
 typedef struct vertex {
     vertex( int val ) {
-        val = val;
+        this->val = val;
         pnext = NULL;
     }
     int val;
@@ -93,14 +93,14 @@ void CGraph::AddEdge( int s, int t ) {
     if ( ptemp == NULL ) {
         vertexInfo[s] = pvt;
     } else {
-        Insert( ptemp, pvs );
+        Insert( ptemp, pvt );
     }
     
     ptemp = vertexInfo[t];
     if ( ptemp == NULL ) {
         vertexInfo[t] = pvs;
     } else {
-        Insert( ptemp, pvt );
+        Insert( ptemp, pvs );
     }
 }
 
