@@ -60,6 +60,7 @@ void CGraph::bfs( int s, int t ) {
             if ( vid == t ) {
                 //已经找到了,打印路径
                 printpath( pre, s, t );
+                getchar();
                 return;
             }
             q.pop();
@@ -106,9 +107,10 @@ void CGraph::AddEdge( int s, int t ) {
 }
 
 int main( int argc, char* argv[] ) {
-    CGraph* p = new CGraph(3);
+    CGraph* p = new CGraph(4);
     p->AddEdge( 1, 2 );
     p->AddEdge( 1, 3 );
-    p->bfs( 1, 3 );
+    p->AddEdge( 3, 4 );
+    p->bfs( 1, 4 );
     return 0;
 }
