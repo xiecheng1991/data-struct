@@ -55,7 +55,8 @@ void CGraph::bfs( int s, int t ) {
 
     q.push( s );
     while ( !q.empty() ) {
-        for ( int i = 0; i < q.size(); ++i ) {
+        int size = q.size();
+        for ( int i = 0; i < size; ++i ) {
             int vid = q.front();
             if ( vid == t ) {
                 //已经找到了,打印路径
@@ -67,14 +68,20 @@ void CGraph::bfs( int s, int t ) {
             if ( !visited[vid] ) {
                 visited[vid] = true;
                 vertex* ptemp = vertexInfo[vid];
+
                 while ( ptemp != NULL ) {
                     q.push( ptemp->val );
-                    pre[ptemp->val] = vid;
+                    if ( !visited[ptemp->val] ) {
+                        //如果该结点没有被访问过才记录它的前驱结点
+                        pre[ptemp->val] = vid;
+                    }
                     ptemp = ptemp->pnext;
                 }
             }
         }
     }
+    cout << "not find it" << endl;
+    getchar();
 
 }
 
@@ -111,6 +118,6 @@ int main( int argc, char* argv[] ) {
     p->AddEdge( 1, 2 );
     p->AddEdge( 1, 3 );
     p->AddEdge( 3, 4 );
-    p->bfs( 1, 4 );
+    p->bfs( 2, 4 );
     return 0;
 }
