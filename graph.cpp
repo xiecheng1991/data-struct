@@ -37,9 +37,7 @@ class CGraph {
         //dfs遍历 深度优先 遍历图
         void dfs( int s, int t );
 
-        void dfshelper( int s, int t, map<int,int>& pre, vector<int>& visited ) {
-            
-        }
+        void dfshelper( int s, int t, map<int,int>& pre, vector<int>& visited );
 
     private:
         int vertexnum;         //图的顶点数量
@@ -53,19 +51,46 @@ void printpath( map<int, int>& pre, int s, int t ) {
     cout << t << "->";
 }
 
+bool found = false;
+void CGraph::dfshelper( int s, int t, map<int, int>& pre, vector<int>& visited ) {
+    if ( found == true ) {
+        //如果该结点访问过了
+        return;
+    } 
+    visited[s] = true;
+    if ( s == t ) {
+        found = true;
+        return;
+    }
+    vertex* pnode = vertexInfo[s];
+    if ( pnode == NULL ) {
+        cout << "不存在和他相连的边和顶点" << s << endl;
+        return; 
+    }
+    while ( pnode ) {
+        if ( !visited[pnode->val] ) {
+            pre[pnode->val] = s;
+            dfshelper( pnode->val, t, pre, visited );
+        }
+        pnode = pnode->pnext;
+    }  
+}
+
+
 void CGraph::dfs( int s, int t ) {
     map<int, int> pre;
     for ( int i = 1; i <= vertexnum; ++i ) {
         pre[i] = -1;
     }
     vector<int> visited( vertexnum + 1, false );
-    vertex* ptemp = vertexInfo[s];
-    while ( ptemp ) {
-        pre[ptemp->val] = s;
-        helper( ptemp->val, t )
+    dfshelper(s, t, pre, visited);
+    if ( !found ) {
+        cout << "not find it" << endl;
+    } else {
+        printpath(pre, s, t);
     }
-}
 
+}
 void CGraph::bfs( int s, int t ) {
     map<int, int> pre;
     vector<bool> visited( vertexnum, false );
@@ -102,7 +127,6 @@ void CGraph::bfs( int s, int t ) {
         }
     }
     cout << "not find it" << endl;
-    getchar();
 
 }
 
@@ -135,10 +159,12 @@ void CGraph::AddEdge( int s, int t ) {
 }
 
 int main( int argc, char* argv[] ) {
-    CGraph* p = new CGraph(4);
+    CGraph* p = new CGraph(5);
     p->AddEdge( 1, 2 );
     p->AddEdge( 1, 3 );
     p->AddEdge( 3, 4 );
-    p->bfs( 2, 4 );
+    //p->bfs( 2, 4 );
+    p->dfs( 2, 5 );
+    getchar();
     return 0;
 }
