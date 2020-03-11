@@ -8,6 +8,12 @@
 using namespace std;
 #define MAX_LEVEL 16                //跳表最大索引层数
 
+//跳表的主要核心思想就是 每一层 隔两个或者n个抽出一个到上一级索引层
+//
+//1->5
+//1->3->5->7
+//1->2->3->4->5->6->7->8
+
 int random_level() {
     int level = 0;
     for ( int i = 0; i < MAX_LEVEL; ++i ) {
