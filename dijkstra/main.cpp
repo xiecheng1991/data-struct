@@ -4,6 +4,10 @@
 #include<limits.h>
 using namespace std;
 
+//总得来说感觉还是图的广度优先遍历
+//只不过在选择接下来往哪个节点走的时候 把它的结点放到一个小顶堆里面去 取出离他距离最短的结点
+//所以 才有了Vertext这个结构体 用来保存每个结点到其实结点的最短距离
+
 typedef struct Vertext{
 	int id; 		//顶点编号
 	int dist; 		//起始点到这个点的距离
